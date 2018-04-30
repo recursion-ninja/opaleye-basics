@@ -46,7 +46,7 @@ type SecurityType = Bool -- True = Stock, False = Option.
 data  QuarterlyRecord' a b c d e f
     = QuarterlyRecord
     { manager     :: a
-    , securtiy    :: b
+    , security    :: b
     , year        :: c
     , quarter     :: d
     , quantity    :: e
@@ -101,7 +101,7 @@ quarterlyRecordTable :: Table QuarterlyRecordColumn QuarterlyRecordColumn
 quarterlyRecordTable = table "securityTable"
     ( pQuarterlyRecord QuarterlyRecord
         { manager     = tableColumn "manager"
-        , securtiy    = tableColumn "security"
+        , security    = tableColumn "security"
         , year        = tableColumn "year"
         , quarter     = tableColumn "quarter"
         , quantity    = tableColumn "quantity"
