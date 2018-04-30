@@ -7,7 +7,7 @@
 module Queries where
 
 import           Control.Arrow
-import           Data.Profunctor.Product (p2, p3)
+import           Data.Profunctor.Product (p2, p3, p5)
 import           Data.Profunctor.Product.Default (Default)
 import           Data.Profunctor.Product.TH (makeAdaptorAndInstance)
 import           Data.Time.Calendar (Day)
@@ -69,3 +69,27 @@ queryOne = proc () -> do
             }
       )
       (queryTable quarterlyRecordTable)
+
+
+--queryTwo :: Query ()
+queryTwo = aggregate
+      (p5 (groupBy, groupBy, groupBy, sum, groupBy))
+      subQuery
+  where
+    subQuery = proc () -> do
+        issuerRec    <- sectorNormalizer <$> queryTable issuerTable -< ()
+        securityRec  <- queryTable securityTable -< ()
+        restrict     -< issuer securityRec .== issuerName issuerRec
+        quarterlyRec <- queryTable quarterlyRecordTable -< ()
+        restrict     -< security quarterlyRec .== securityName securityRec
+        returnA      -< ( manager quarterlyRec
+                        , year quarterlyRec
+                        , quarter quarterlyRec
+                        , marketValue quarterlyRec
+                        , sector issuerRec
+                        )
+      where
+        sectorNormalizer :: IssuerColumn -> Issuer' (Column PGText) (Column PGText)
+        sectorNormalizer record = record { sector = sectorName }
+          where
+            sectorName = matchNullable (pgString "unknown sector") id (sector record)
