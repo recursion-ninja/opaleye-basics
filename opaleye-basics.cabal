@@ -53,3 +53,37 @@ library
       Queries
       Types
   default-language: Haskell2010
+  ghc-options:         -O2
+                       -g
+                       --                       -debug -optl-static
+                                           -- Sanity check warnings
+                       -Wall
+                       -Wcompat
+                       -Wdodgy-foreign-imports
+                       -Wduplicate-exports
+                       -Wempty-enumerations
+                       -Widentities
+                       -Wincomplete-patterns
+                       -Wincomplete-record-updates
+                       -Wincomplete-uni-patterns
+                       -Wmissing-fields
+                       -Wmissing-home-modules
+                       -Wmissing-monadfail-instances
+                       -Wmissing-monadfail-instances
+                       -Wmissing-signatures
+                       -Wnoncanonical-monadfail-instances
+                       -Wnoncanonical-monad-instances
+                       -Wnoncanonical-monoid-instances
+                       -Woverflowed-literals
+                       -Woverlapping-patterns
+                       -Wredundant-constraints
+                       -Wsemigroup
+                       -Wtabs
+                       -Wunrecognised-warning-flags
+                       -Wunrecognised-warning-flags
+                       -Wunused-binds
+                       -Wunused-do-bind
+                       -Wunused-foralls
+                       -Wunused-imports
+                       -Wunused-matches
+                       -Wwrong-do-bind
