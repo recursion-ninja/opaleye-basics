@@ -6,21 +6,12 @@
 
 module Types where
 
-import           Control.Arrow
-import           Data.Profunctor.Product (p2, p3)
-import           Data.Profunctor.Product.Default (Default)
-import           Data.Profunctor.Product.TH (makeAdaptorAndInstance)
-import           Data.Time.Calendar (Day)
-import qualified Database.PostgreSQL.Simple as PGS
-import           Opaleye (Column, Nullable, matchNullable, isNull,
-                          Table, table, tableColumn, queryTable,
-                          Query, QueryArr, restrict, (.==), (.<=), (.&&), (.<),
-                          (.===),
-                          (.++), ifThenElse, pgString, aggregate, groupBy,
-                          count, avg, sum, leftJoin, runQuery,
-                          showSqlForPostgres, Unpackspec,
-                          PGInt2, PGInt4, PGInt8, PGText, PGDate, PGFloat8, PGBool)
-import           Prelude hiding (sum)
+import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
+import Data.Time.Calendar (Day)
+import Opaleye ( Column, Nullable, Table, table, tableColumn
+               , PGInt2, PGInt8, PGText, PGDate, PGFloat8, PGBool
+               )
+import Prelude hiding (sum)
 
 
 type Sector = Maybe String

@@ -6,22 +6,12 @@
 
 module Queries where
 
-import           Control.Arrow
-import           Data.Profunctor.Product (p2, p3, p5)
-import           Data.Profunctor.Product.Default (Default)
-import           Data.Profunctor.Product.TH (makeAdaptorAndInstance)
-import           Data.Time.Calendar (Day)
-import qualified Database.PostgreSQL.Simple as PGS
-import           Opaleye (Column, Nullable, matchNullable, isNull,
-                          Table, table, tableColumn, queryTable,
-                          Query, QueryArr, restrict, (.==), (.<=), (.&&), (.<),
-                          (.===),
-                          (.++), ifThenElse, pgString, aggregate, groupBy,
-                          count, avg, sum, leftJoin, runQuery,
-                          showSqlForPostgres, Unpackspec,
-                          PGInt2, PGInt4, PGInt8, PGText, PGDate, PGFloat8, PGBool)
-import           Prelude hiding (sum)
-import           Types
+import Control.Arrow
+import Data.Profunctor.Product (p5)
+import Opaleye ( Column, Query, matchNullable, queryTable, restrict, (.==), (.&&)
+               , pgString, aggregate, groupBy, sum, PGInt2, PGText, PGDate, PGFloat8)
+import Prelude hiding (sum)
+import Types
 
 
 queryOne
@@ -71,7 +61,7 @@ queryOne = proc () -> do
       (queryTable quarterlyRecordTable)
 
 
---queryTwo :: Query ()
+queryTwo :: Query (Column PGText, Column PGDate, Column PGInt2, Column PGFloat8, Column PGText)
 queryTwo = aggregate
       (p5 (groupBy, groupBy, groupBy, sum, groupBy))
       subQuery
