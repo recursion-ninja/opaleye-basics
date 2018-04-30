@@ -4,7 +4,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Tables where
+module Types where
 
 import           Control.Arrow
 import           Data.Profunctor.Product (p2, p3)
@@ -36,9 +36,9 @@ type Manager       = Manager' String
 type ManagerColumn = Manager' (Column PGText)
 
 
-data Security' a b  = Security { securityName :: a, securityType :: b }
-type Security       = Security' String SecurityType
-type SecurityColumn = Security' (Column PGText) (Column PGBool)
+data Security' a b c = Security { securityName :: a, securityType :: b, issuer :: c }
+type Security        = Security' String SecurityType String
+type SecurityColumn  = Security' (Column PGText) (Column PGBool) (Column PGText)
 -- TODO: Figure out how to make this a sum type and play nice with Opaleye
 type SecurityType = Bool -- True = Stock, False = Option.
 
@@ -90,8 +90,9 @@ managerTable = table "managerTable"
 securityTable :: Table SecurityColumn SecurityColumn
 securityTable = table "securityTable"
     ( pSecurity Security
-        { securityName = tableColumn "securityName"
-        , securityType = tableColumn "securityType"
+        { securityName   = tableColumn "securityName"
+        , securityType   = tableColumn "securityType"
+        , issuer         = tableColumn "issuer"
         }
     )
 
